@@ -1,0 +1,22 @@
+{
+  "name": "peek/simple-api-client",
+  "description": "Simple API Client with cUrl",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Pascal Kleindienst",
+      "email": "pascal.kleindienst@posteo.de"
+    }
+  ],
+  "require": {
+    "php": ">=5.5",
+    "jyggen/curl": "4.0.x-dev",
+    "illuminate/support": "5.1.*|5.2.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Peek\\Api\\": "src"
+    }
+  }
+}
