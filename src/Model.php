@@ -2,6 +2,10 @@
 
 use JsonSerializable;
 
+/**
+ * Class Model
+ * @package Peek\Api
+ */
 class Model implements JsonSerializable
 {
     /**
@@ -43,6 +47,27 @@ class Model implements JsonSerializable
         $this->attributes[$key] = $value;
 
         return $this;
+    }
+
+    /**
+     * Create a new model instance
+     * @param array $attributes
+     * @return \Peek\Api\Model
+     * @throws \InvalidArgumentException if attributes is not an array or a json object
+     */
+    public function newInstance($attributes = [])
+    {
+        // json
+        if (is_string($attributes)) {
+            $attributes = json_decode($attributes, true);
+        }
+
+        // check if attributes are valid
+        if (!is_array($attributes)) {
+            throw new \InvalidArgumentException('Attributes must be of type array or a valid json string');
+        }
+
+        return new self($attributes);
     }
 
     /**
