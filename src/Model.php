@@ -19,7 +19,9 @@ class Model implements JsonSerializable
      */
     public function __construct($attributes = null)
     {
-        $this->fill($attributes);
+        if (!is_null($attributes)) {
+            $this->fill($attributes);
+        }
     }
 
     /**
