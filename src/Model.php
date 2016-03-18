@@ -19,18 +19,26 @@ class Model implements JsonSerializable
      */
     public function __construct($attributes = null)
     {
-        if (is_array($attributes)) {
-            $this->fill($attributes);
-        }
+        $this->fill($attributes);
     }
 
     /**
      * Fill the attributes
-     * @param  array $attributes
+     * @param  string|array $attributes
      * @return void
      */
-    private function fill(array $attributes)
+    private function fill($attributes)
     {
+        // json
+        if (is_string($attributes)) {
+            $attributes = json_decode($attributes, true);
+        }
+
+        // check if attributes are valid
+        if (!is_array($attributes)) {
+            throw new \InvalidArgumentException('Attributes must be of type array or a valid json string');
+        }
+
         foreach ($attributes as $key => $value) {
             $this->setAttribute($key, $value);
         }
@@ -57,16 +65,6 @@ class Model implements JsonSerializable
      */
     public function newInstance($attributes = [])
     {
-        // json
-        if (is_string($attributes)) {
-            $attributes = json_decode($attributes, true);
-        }
-
-        // check if attributes are valid
-        if (!is_array($attributes)) {
-            throw new \InvalidArgumentException('Attributes must be of type array or a valid json string');
-        }
-
         return new self($attributes);
     }
 
