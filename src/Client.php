@@ -52,8 +52,8 @@ abstract class Client
         $request = new Request($this->domain . '/' . $endpoint);
         
         // Add client secret header
-        if (isset($config['secret'])) {
-            $request->headers->add(['X-Client-Secret' => $config['secret']]);
+        if (isset($this->config['secret'])) {
+            $request->headers->add(['X-Client-Secret' => $this->config['secret']]);
         }
         
         // add curl options
