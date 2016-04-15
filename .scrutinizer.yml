@@ -22,6 +22,7 @@ checks:
         fix_doc_comments: true
 
 tools:
+    php_mess_detector: true
     php_code_sniffer:
         config:
             standard: "PSR2"
@@ -42,5 +43,14 @@ tools:
                 - 'vendor/*'
                 - 'tests/*'
 
+    php_loc:
+        enabled: true
+        excluded_dirs:
+            - vendor
+            - tests
+
     # Security Advisory Checker
     sensiolabs_security_checker: true
+
+    # Code Coverage
+    external_code_coverage: true
