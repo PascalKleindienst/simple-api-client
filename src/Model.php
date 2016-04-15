@@ -107,7 +107,7 @@ class Model implements JsonSerializable
     public function getAttribute($key)
     {
         $value = $this->getAttributeValue($key);
-    
+        
         // First we will check for the presence of a mutator for the set operation
         // which simply lets the developers tweak the attribute as it is set.
         if ($this->hasGetMutator($key)) {
@@ -158,7 +158,7 @@ class Model implements JsonSerializable
      * @param null  $class
      * @return \Illuminate\Support\Collection
      */
-    protected function makeCollection(array $values, $class = null)
+    public function makeCollection(array $values, $class = null)
     {
         $collection = new Collection($values);
     
