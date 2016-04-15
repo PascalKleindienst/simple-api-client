@@ -56,7 +56,8 @@ abstract class Client
 
             // get key
             if (!is_string($key)) {
-                $key = basename($endpoint);
+                $parts = explode('\\', $endpoint);
+                $key = end($parts);
             }
 
             // save
