@@ -10,10 +10,10 @@ use Jyggen\Curl\Request;
 abstract class Client
 {
     /**
-     * Namespace for the endpoints
+     * Endpoints
      * @var string
      */
-    protected $endpointNamespace;
+    protected $endpoints = [];
     
     /**
      * @var string
@@ -33,11 +33,43 @@ abstract class Client
     
     /**
      * Create a new client instance.
+     * @param array $endpoints
      * @param array $config
      */
-    public function __construct(array $config = [])
+    public function __construct(array $endpoints, array $config = [])
     {
+        $this->setEndpoints($endpoints);
         $this->config = $config;
+    }
+
+    /**
+     * @param array $endpoints
+     * @throws \Atog\Api\Exceptions\InvalidEndpointException
+     */
+    protected function setEndpoints(array $endpoints)
+    {
+        foreach ($endpoints as $key => $endpoint) {
+            // check if class exists
+            if (!class_exists($endpoint)) {
+                throw new InvalidEndpointException("Class {$endpoint} does not exists");
+            }
+
+            // get key
+            if (!is_string($key)) {
+                $key = basename($endpoint);
+            }
+
+            // save
+            $this->endpoints[$key] = $endpoint;
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getConfig()
+    {
+        return $this->config;
     }
     
     /**
@@ -87,17 +119,17 @@ abstract class Client
      */
     public function getEndpoint($endpoint)
     {
-        // Create studly class name
+        // Get Endpoint Class name
         $endpoint = studly_case($endpoint);
-        $class = "\\{$this->endpointNamespace}\\{$endpoint}";
-        
+
+        if (!array_key_exists($endpoint, $this->endpoints)) {
+            throw new InvalidEndpointException("Endpoint {$endpoint} does not exists");
+        }
+
+        $class = $this->endpoints[$endpoint];
+
         // Check if an instance has already been initiated
         if (isset($this->cachedEndpoints[$endpoint]) === false) {
-            // check if class exists
-            if (!class_exists($class)) {
-                throw new InvalidEndpointException("Class {$class} does not exists");
-            }
-            
             // check if class is an EndPoint
             $endpointClass = new \ReflectionClass($class);
             if (!$endpointClass->isSubclassOf('Atog\Api\Endpoint')) {
