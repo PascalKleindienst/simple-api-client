@@ -127,7 +127,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetEndpointMagicMethodClassDoesNotExists()
     {
-        $this->client->Foo;
+        $this->client->foo;
     }
 
     /**
@@ -135,7 +135,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetEndpointMagicMethodIsNotValidSubclass()
     {
-        $this->client->InvalidEndpoint;
+        $this->client->invalidEndpoint;
     }
 
     public function testGetEndpointMagicMethodValid()
@@ -147,7 +147,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
                 ['models' => ['ValidEndpoint' => ModelForEndpoint::class]]
             ]
         );
-        $endpoint = $client->ValidEndpoint;
+        $endpoint = $client->validEndpoint;
         $this->assertInstanceOf(ValidEndpoint::class, $endpoint);
         $this->assertInstanceOf(Endpoint::class, $endpoint);
         $this->assertInstanceOf(ModelForEndpoint::class, $endpoint->getModel());
@@ -167,7 +167,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         );
 
         // check if cached
-        $endpoint = $client->ValidEndpoint;
+        $endpoint = $client->validEndpoint;
         $reflection = new ReflectionClass(Client::class);
         $property = $reflection->getProperty('cachedEndpoints');
         $property->setAccessible(true);
@@ -177,7 +177,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(ValidEndpoint::class, $endpointVal['ValidEndpoint']);
 
         // get cached one
-        $cached = $client->ValidEndpoint;
+        $cached = $client->validEndpoint;
         $this->assertEquals($cached, $endpoint);
     }
 

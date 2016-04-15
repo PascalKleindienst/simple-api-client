@@ -60,7 +60,7 @@ abstract class Client
             }
 
             // save
-            $this->endpoints[$key] = $endpoint;
+            $this->endpoints[studly_case($key)] = $endpoint;
         }
     }
 
