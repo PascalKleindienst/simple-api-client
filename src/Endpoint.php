@@ -31,6 +31,11 @@ abstract class Endpoint
         $this->client = $client;
         $this->model = $model;
     }
+
+    public function getModel()
+    {
+        return $this->model;
+    }
     
     /**
      * Get the endpoint url for the request
