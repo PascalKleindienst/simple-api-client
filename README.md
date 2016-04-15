@@ -11,7 +11,7 @@
 Via Composer
 
 ``` bash
-$ composer require peek/simple-api-client
+$ composer require atog/simple-api-client
 ```
 
 ## Usage
@@ -35,7 +35,7 @@ The MIT License (MIT). Please see [License File](LICENSE) for more information.
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/PascalKleindienst/simple-api-client.svg?style=flat-square
 [ico-code-coverage]: https://img.shields.io/scrutinizer/coverage/g/PascalKleindienst/simple-api-client.svg?style=flat-square
 [ico-testing]: https://img.shields.io/travis/PascalKleindienst/simple-api-client.svg?style=flat-square
-[ico-hhvm]: https://img.shields.io/hhvm/PascalKleindienst/simple-api-client.svg?style=flat-square
+[ico-hhvm]: https://img.shields.io/hhvm/atog/simple-api-client.svg?style=flat-square
 
 [link-release]: https://github.com/PascalKleindienst/simple-api-client/releases
 [link-license]: https://github.com/PascalKleindienst/simple-api-client/blob/master/LICENSE
