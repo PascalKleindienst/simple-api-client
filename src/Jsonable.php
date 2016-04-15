@@ -1,8 +1,8 @@
-<?php namespace Peek\Api;
+<?php namespace Atog\Api;
 
 /**
  * Trait Jsonable implements JsonSerializable interface
- * @package Peek\Api
+ * @package Atog\Api
  */
 trait Jsonable
 {

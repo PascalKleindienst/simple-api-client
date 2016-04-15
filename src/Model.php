@@ -1,11 +1,11 @@
-<?php namespace Peek\Api;
+<?php namespace Atog\Api;
 
 use Illuminate\Support\Collection;
 use JsonSerializable;
 
 /**
  * Class Model
- * @package Peek\Api
+ * @package Atog\Api
  */
 class Model implements JsonSerializable
 {
@@ -178,7 +178,7 @@ class Model implements JsonSerializable
     /**
      * Create a new model instance
      * @param array $attributes
-     * @return \Peek\Api\Model
+     * @return \Atog\Api\Model
      * @throws \InvalidArgumentException if attributes is not an array or a json object
      */
     public function newInstance($attributes = [])

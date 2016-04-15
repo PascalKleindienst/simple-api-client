@@ -1,5 +1,5 @@
 {
-  "name": "peek/simple-api-client",
+  "name": "atog/simple-api-client",
   "description": "Simple API Client with cUrl",
   "minimum-stability": "stable",
   "license": "MIT",
@@ -16,7 +16,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Peek\\Api\\": "src"
+      "Atog\\Api\\": "src"
     }
   }
 }

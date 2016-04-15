@@ -1,11 +1,11 @@
-<?php namespace Peek\Api;
+<?php namespace Atog\Api;
 
+use Atog\Api\Exceptions\InvalidEndpointException;
 use Jyggen\Curl\Request;
-use Peek\Api\Exceptions\InvalidEndpointException;
 
 /**
  * Abstract Client
- * @package Peek\Api
+ * @package Atog\Api
  */
 abstract class Client
 {
@@ -68,8 +68,8 @@ abstract class Client
     /**
      * Get an API endpoint
      * @param string $endpoint
-     * @return \Peek\Api\Endpoint
-     * @throws \Peek\Api\Exceptions\InvalidEndpointException
+     * @return \Atog\Api\Endpoint
+     * @throws \Atog\Api\Exceptions\InvalidEndpointException
      */
     public function __get($endpoint)
     {
@@ -79,8 +79,8 @@ abstract class Client
     /**
      * Get an API endpoint.
      * @param string $endpoint
-     * @return \Peek\Api\Endpoint
-     * @throws \Peek\Api\Exceptions\InvalidEndpointException
+     * @return \Atog\Api\Endpoint
+     * @throws \Atog\Api\Exceptions\InvalidEndpointException
      */
     public function getEndpoint($endpoint)
     {
@@ -97,8 +97,8 @@ abstract class Client
             
             // check if class is an EndPoint
             $endpointClass = new \ReflectionClass($class);
-            if (!$endpointClass->isSubclassOf('Peek\Api\Endpoint')) {
-                throw new InvalidEndpointException("Class {$class} does not extend Peek\\Api\\Endpoint");
+            if (!$endpointClass->isSubclassOf('Atog\Api\Endpoint')) {
+                throw new InvalidEndpointException("Class {$class} does not extend Atog\\Api\\Endpoint");
             }
             
             // check for model

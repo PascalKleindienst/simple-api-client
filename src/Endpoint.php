@@ -1,18 +1,18 @@
-<?php namespace Peek\Api;
+<?php namespace Atog\Api;
 
 /**
  * Abstract Class Endpoint
- * @package Peek\Api
+ * @package Atog\Api
  */
 abstract class Endpoint
 {
     /**
-     * @var \Peek\Api\Client
+     * @var \Atog\Api\Client
      */
     protected $client;
     
     /**
-     * @var \Peek\Api\Model
+     * @var \Atog\Api\Model
      */
     protected $model;
     
@@ -23,8 +23,8 @@ abstract class Endpoint
     
     /**
      * Endpoint constructor.
-     * @param \Peek\Api\Client $client
-     * @param \Peek\Api\Model  $model
+     * @param \Atog\Api\Client $client
+     * @param \Atog\Api\Model  $model
      */
     public function __construct(Client $client, Model $model)
     {

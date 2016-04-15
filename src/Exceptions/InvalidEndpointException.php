@@ -1,8 +1,8 @@
-<?php namespace Peek\Api\Exceptions;
+<?php namespace Atog\Api\Exceptions;
 
 /**
  * Class InvalidEndpointException
- * @package Peek\Api\Exceptions
+ * @package Atog\Api\Exceptions
  */
 class InvalidEndpointException extends \Exception
 {
