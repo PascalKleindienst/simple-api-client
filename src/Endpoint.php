@@ -32,6 +32,9 @@ abstract class Endpoint
         $this->model = $model;
     }
 
+    /**
+     * @return \Atog\Api\Model
+     */
     public function getModel()
     {
         return $this->model;
@@ -43,7 +46,7 @@ abstract class Endpoint
      * @param bool   $withTrailingSlash
      * @return string
      */
-    protected function getEndpointUrl($path, $withTrailingSlash)
+    public function getEndpointUrl($path, $withTrailingSlash)
     {
         $url = $this->endpoint . '/' . $path;
         
