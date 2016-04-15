@@ -1,5 +1,6 @@
 <?php namespace Peek\Api;
 
+use Illuminate\Support\Collection;
 use JsonSerializable;
 
 /**
@@ -8,6 +9,8 @@ use JsonSerializable;
  */
 class Model implements JsonSerializable
 {
+    use Jsonable;
+
     /**
      * @var array
      */
@@ -54,36 +57,28 @@ class Model implements JsonSerializable
      */
     public function setAttribute($key, $value)
     {
+        // First we will check for the presence of a mutator for the set operation
+        // which simply lets the developers tweak the attribute as it is set on
+        // the model, such as "json_encoding" an listing of data for storage.
+        if ($this->hasSetMutator($key)) {
+            $method = 'set' . studly_case($key) . 'Attribute';
+        
+            return $this->{$method}($value);
+        }
+
         $this->attributes[$key] = $value;
 
         return $this;
     }
 
     /**
-     * Create a new model instance
-     * @param array $attributes
-     * @return \Peek\Api\Model
-     * @throws \InvalidArgumentException if attributes is not an array or a json object
+     * Determine if a set mutator exists for an attribute.
+     * @param  string $key
+     * @return bool
      */
-    public function newInstance($attributes = [])
+    public function hasSetMutator($key)
     {
-        return new self($attributes);
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray()
-    {
-        return $this->attributes;
+        return method_exists($this, 'set' . studly_case($key) . 'Attribute');
     }
 
     /**
@@ -112,10 +107,18 @@ class Model implements JsonSerializable
     public function getAttribute($key)
     {
         $value = $this->getAttributeValue($key);
+    
+        // First we will check for the presence of a mutator for the set operation
+        // which simply lets the developers tweak the attribute as it is set.
+        if ($this->hasGetMutator($key)) {
+            $method = 'get' . studly_case($key) . 'Attribute';
+        
+            return $this->{$method}($value);
+        }
 
         return $value;
     }
-
+    
     /**
      * Get an attribute from the $attributes array.
      * @param  string $key
@@ -131,6 +134,16 @@ class Model implements JsonSerializable
     }
 
     /**
+     * Determine if a get mutator exists for an attribute.
+     * @param  string $key
+     * @return bool
+     */
+    public function hasGetMutator($key)
+    {
+        return method_exists($this, 'get' . studly_case($key) . 'Attribute');
+    }
+    
+    /**
      * @param $key
      * @return bool
      */
@@ -140,18 +153,36 @@ class Model implements JsonSerializable
     }
 
     /**
-     * @return string
+     * Transform an array of values into a collection of models
+     * @param array $values
+     * @param null  $class
+     * @return \Illuminate\Support\Collection
      */
-    public function __toString()
+    protected function makeCollection(array $values, $class = null)
     {
-        return $this->toJson();
+        $collection = new Collection($values);
+    
+        if (!is_null($class) && class_exists($class)) {
+            $model = new $class();
+        
+            if ($model instanceof Model) {
+                foreach ($collection as $key => $item) {
+                    $collection[$key] = $model->newInstance($item);
+                }
+            }
+        }
+    
+        return $collection;
     }
 
     /**
-     * @return string
+     * Create a new model instance
+     * @param array $attributes
+     * @return \Peek\Api\Model
+     * @throws \InvalidArgumentException if attributes is not an array or a json object
      */
-    public function toJson()
+    public function newInstance($attributes = [])
     {
-        return json_encode($this->toArray(), true);
+        return new static($attributes);
     }
 }
