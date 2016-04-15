@@ -14,14 +14,17 @@ abstract class Client
      * @var string
      */
     protected $endpointNamespace;
+    
     /**
      * @var string
      */
     protected $domain;
+    
     /**
      * @var array
      */
     protected $config;
+
     /**
      * A array containing the cached endpoints
      * @var array
