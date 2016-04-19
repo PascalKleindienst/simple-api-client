@@ -105,6 +105,7 @@ $ composer test
 
 The MIT License (MIT). Please see [License File](LICENSE) for more information.
 
+[ico-version]: https://img.shields.io/packagist/v/atog/simple-api-client.svg?style=flat-square
 [ico-release]: https://img.shields.io/github/release/PascalKleindienst/simple-api-client.svg?style=flat-square
 [ico-license]: https://img.shields.io/github/license/PascalKleindienst/simple-api-client.svg?style=flat-square
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/PascalKleindienst/simple-api-client.svg?style=flat-square
