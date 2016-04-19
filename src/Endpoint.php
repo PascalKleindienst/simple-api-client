@@ -1,5 +1,7 @@
 <?php namespace Atog\Api;
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * Abstract Class Endpoint
  * @package Atog\Api
@@ -55,5 +57,19 @@ abstract class Endpoint
         }
         
         return $url;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Response $response
+     * @return \Atog\Api\Model|null
+     */
+    public function respond(Response $response)
+    {
+        // return new model instance with fetched content if response is okay
+        if ($response->isOk()) {
+            return $this->model->newInstance($response->getContent());
+        }
+
+        return null;
     }
 }

@@ -3,6 +3,7 @@
 use Atog\Api\Client;
 use Atog\Api\Endpoint;
 use Atog\Api\Model;
+use Symfony\Component\HttpFoundation\Response;
 
 class EndpointTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,11 +14,15 @@ class EndpointTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        $model = $this->getMock(Model::class);
+        $model->method('newInstance')
+            ->will($this->returnArgument(0));
+
         $this->endpoint = $this->getMockForAbstractClass(
             Endpoint::class,
             [
                 $this->getMockBuilder(Client::class)->disableOriginalConstructor()->getMockForAbstractClass(),
-                $this->getMock(Model::class)
+                $model
             ]
         );
     }
@@ -38,5 +43,17 @@ class EndpointTest extends \PHPUnit_Framework_TestCase
         // test
         $this->assertEquals('foo/bar', $this->endpoint->getEndpointUrl('bar', false));
         $this->assertEquals('foo/bar/', $this->endpoint->getEndpointUrl('bar', true));
+    }
+    
+    public function testRespond()
+    {
+        $model = $this->endpoint->respond(new Response('{"foo":"bar","loren":"ipsum","0":"foobar"}'));
+        $this->assertEquals('{"foo":"bar","loren":"ipsum","0":"foobar"}', $model);
+    }
+
+    public function testRespondReturnsNullIfNotOkay()
+    {
+        $model = $this->endpoint->respond(new Response('{ "foo": "bar" }', 404));
+        $this->assertNull($model);
     }
 }
