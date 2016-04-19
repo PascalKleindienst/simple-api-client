@@ -36,12 +36,10 @@ class TestEndpoint extends \Atog\Api\Endpoint
 
 	public function find($slug)
     {
-		$response = $this->client->get($this->getEndpointUrl($slug, true)); // https://example.com/api/v1/foo/$slug gets called
-		
-        // return new model instance with fetched content if response is okay
-		if ($response->isOk()) {
-        	return $this->model->newInstance($response->getContent());
-        }
+        // https://example.com/api/v1/foo/$slug gets called
+		$this->respond(
+		    $this->client->get($this->getEndpointUrl($slug, true))
+		); 
     }
 }
 ```
@@ -88,6 +86,10 @@ $client = new Client(
 $foo = $client->testEndpoint->find(1); // GET http://example.com/api/v1/foo/1
 ```
 ## Change log
+
+### 1.1.0
+* added support for query params
+* added helper method to return api reponse
 
 ### 1.0.0
 * Initial Release
