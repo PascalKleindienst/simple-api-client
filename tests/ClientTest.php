@@ -187,4 +187,11 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Response::class, $response);
         $this->assertInstanceOf(\Symfony\Component\HttpFoundation\Response::class, $response);
     }
+
+    public function testGetRequestWithParams()
+    {
+        $response = $this->client->get('', ['foo' => 'bar']);
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertInstanceOf(\Symfony\Component\HttpFoundation\Response::class, $response);
+    }
 }

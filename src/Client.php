@@ -75,14 +75,22 @@ abstract class Client
     
     /**
      * Make a GET Request to an endpoint
-     * @param $endpoint
+     * @param       $endpoint
+     * @param array $params
      * @return \Jyggen\Curl\Response
      * @throws \Jyggen\Curl\Exception\CurlErrorException
      * @throws \Jyggen\Curl\Exception\ProtectedOptionException
      */
-    public function get($endpoint)
+    public function get($endpoint, $params = [])
     {
-        $request = new Request($this->domain . '/' . $endpoint);
+        // build url
+        $url = $this->domain . '/' . $endpoint;
+
+        if (!empty($params)) {
+            $url = $url . '?' . http_build_query($params);
+        }
+
+        $request = new Request($url);
         
         // Add client secret header
         if (isset($this->config['secret'])) {
@@ -97,7 +105,7 @@ abstract class Client
         }
         
         $request->execute();
-        
+
         return $request->getResponse();
     }
     
