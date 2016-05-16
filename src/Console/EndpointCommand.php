@@ -23,7 +23,9 @@ class EndpointCommand extends AbstractScaffoldingCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->createFileTemplate($input, $output, $this->getApplication()->endpointPath());
+        if ($this->getApplication() instanceof Application) {
+            $this->createFileTemplate($input, $output, $this->getApplication()->endpointPath());
+        }
     }
 
     /**

@@ -23,7 +23,9 @@ class ModelCommand extends AbstractScaffoldingCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->createFileTemplate($input, $output, $this->getApplication()->modelPath());
+        if ($this->getApplication() instanceof Application) {
+            $this->createFileTemplate($input, $output, $this->getApplication()->modelPath());
+        }
     }
 
     /**
