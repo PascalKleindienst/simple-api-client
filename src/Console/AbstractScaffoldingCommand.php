@@ -49,7 +49,7 @@ abstract class AbstractScaffoldingCommand extends Command
         $namespace = str_replace('.', '\\', $input->getArgument('namespace'));
         $name = $input->getArgument('name');
         $filename = $path . str_plural($name) . '.php';
-
+        
         // only write file if path exists and file does not exist yet
         if (file_exists($path) && !file_exists($filename)) {
             // write file
@@ -63,7 +63,7 @@ abstract class AbstractScaffoldingCommand extends Command
         }
 
         // error
-        $output->writeln("<error>Could not create file $filename at $path</error>");
+        $output->writeln("<error>Could not create file $name</error>");
     }
 
     /**
