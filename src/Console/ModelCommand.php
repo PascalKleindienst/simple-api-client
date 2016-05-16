@@ -1,8 +1,6 @@
 <?php
 namespace Atog\Api\Console;
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -10,28 +8,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Class ModelCommand
  * @package Atog\Console
  */
-class ModelCommand extends Command
+class ModelCommand extends AbstractScaffoldingCommand
 {
     /**
-     * Command Config
+     * @var string
      */
-    protected function configure()
-    {
-        $this
-            ->setName('create:model')
-            ->setDescription('Create a new Model')
-            ->addArgument(
-                'namespace',
-                InputArgument::REQUIRED,
-                'Namespace in Dot-Notation e.g. Acme.Api'
-            )
-            ->addArgument(
-                'name',
-                InputArgument::REQUIRED,
-                'Name of the Model'
-            )
-        ;
-    }
+    protected $type = 'model';
 
     /**
      * Execute command
@@ -41,39 +23,20 @@ class ModelCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // args
-        $namespace = str_replace('.', '\\', $input->getArgument('namespace'));
-        $name = $input->getArgument('name');
-        $path = $this->getApplication()->modelPath();
-        $file = $path . str_plural($name) . '.php';
-
-        // only write file if path exists and file does not exist yet
-        if (file_exists($path) && !file_exists($file)) {
-            // write file
-            $endpoint = fopen($file, "w+");
-            fwrite($endpoint, $this->template($namespace, $name));
-            fclose($endpoint);
-
-            // output
-            $output->writeln("<info>Created Model: $name</info>");
-            return;
-        }
-
-        // error
-        $output->writeln("<error>Could not create file $file at $path</error>");
+        $this->createFileTemplate($input, $output, $this->getApplication()->modelPath());
     }
 
     /**
      * File Template
      * @param string $namespace
      * @param string $name
-     * @param string $modelNS
+     * @param string $topNSPart
      * @return string
      */
-    protected function template($namespace, $name, $modelNS = "Models")
+    protected function template($namespace, $name, $topNSPart = "Models")
     {
         $className = str_plural($name);
-        $namespace = "{$namespace}\\{$modelNS}";
+        $namespace = "{$namespace}\\{$topNSPart}";
 
         return <<< EOT
 <?php
